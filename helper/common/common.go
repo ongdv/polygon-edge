@@ -362,3 +362,9 @@ func EncodeUint64ToBytes(value uint64) []byte {
 func EncodeBytesToUint64(b []byte) uint64 {
 	return binary.BigEndian.Uint64(b)
 }
+
+func ToFixedFloat(num float64, precision int) float64 {
+	output := math.Pow(10, float64(precision))
+
+	return float64(roundFloat(num*output)) / output
+}

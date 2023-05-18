@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math"
 	"math/big"
 	"net"
 	"net/url"
@@ -75,6 +76,16 @@ func HandleSignals(
 	case <-gracefulCh:
 		return nil
 	}
+}
+
+func roundFloat(num float64) int64 {
+	return int64(num + math.Copysign(0.5, num))
+}
+
+func ToFixedFloat(num float64, precision int) float64 {
+	output := math.Pow(10, float64(precision))
+
+	return float64(roundFloat(num*output)) / output
 }
 
 // FormatList formats a list, using a specific blank value replacement
